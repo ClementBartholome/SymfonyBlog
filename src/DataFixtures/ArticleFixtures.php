@@ -21,6 +21,9 @@ class ArticleFixtures extends Fixture
             $date->modify("-$i days");
 
             $article->setCreationDate($date);
+
+            $this->addReference("article_$i", $article);
+
             $manager->persist($article);
         }
 

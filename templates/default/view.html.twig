@@ -10,4 +10,13 @@
     <h1>{{ article.title }}</h1>
     <small>{{ article.creationDate|date('d/m/Y')}}</small>
     <p>{{ article.content }}</p>
+    <h2>Commentaires</h2>
+    <div class="row">
+    {% for comment in article.comments %}
+    <div class="col-md-12">
+       <small> Le {{ comment.commentDate|date("d/m/Y") }} par {{ comment.author }}</small>
+       <p>{{ comment.content }}</p>
+    </div>
+    {% endfor %}
+    </div>
 {% endblock %}

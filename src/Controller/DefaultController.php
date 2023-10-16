@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 class DefaultController extends AbstractController
 {
     #[Route('/', name: 'article_list', methods: ['GET'])]
@@ -23,10 +24,8 @@ class DefaultController extends AbstractController
     }
 
     #[Route('/{id}', name:'article_view', methods: ['GET'])]
-    public function articleView(ArticleRepository $articleRepository, int $id): Response
+    public function articleView(Article $article): Response
     {
-
-        $article = $articleRepository->find($id);
 
         return $this->render('default/view.html.twig', [
             'article' => $article,
