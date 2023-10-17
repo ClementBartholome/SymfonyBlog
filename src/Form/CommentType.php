@@ -13,15 +13,15 @@ class CommentType extends AbstractType
     {
         $builder
             ->add('content', null, [
-                'label' => 'Votre commentaire',
+                'label' => 'Your comment',
                 'attr' => [
-                    'placeholder' => 'Votre commentaire',
+                    'placeholder' => 'Your comment',
                 ],
             ])
             ->add('author', null, [
-                'label' => 'Votre nom',
+                'label' => 'Your name',
                 'attr' => [
-                    'placeholder' => 'Votre nom',
+                    'placeholder' => 'Your name',
                 ],
             ]);
     }
