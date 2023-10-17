@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add a category{% endblock %}
+
+{% block body %}
+    
+    {{ form_start(form) }}
+        {{ form_label(form.name, null, {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+
+        {{ form_rest(form) }}
+        <button type="submit" class="btn btn-success mt-2">Add category</button>
+    
+    {{ form_end(form)  }}
+
+
+{% endblock %}

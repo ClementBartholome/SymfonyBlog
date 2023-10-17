@@ -12,6 +12,8 @@ class Comment
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+
+    
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -26,6 +28,10 @@ class Comment
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Article $article = null;
+
+    public function __construct() {
+        $this->commentDate = new \DateTime();
+    }
 
     public function getId(): ?int
     {
