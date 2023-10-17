@@ -8,11 +8,12 @@ use App\Entity\Category;
 use App\Form\ArticleType;
 use App\Form\CommentType;
 use App\Form\CategoryType;
+use App\Service\CommentCheck;
 use App\Repository\ArticleRepository;
-use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -32,8 +33,9 @@ class DefaultController extends AbstractController
     }
 
     #[Route('/{id}', name:'article_view', methods: ['GET', 'POST'])]
-    public function articleView(Article $article, Request $request, EntityManagerInterface $manager): Response
+    public function articleView(Article $article, Request $request, EntityManagerInterface $manager, CommentCheck $commentService, SessionInterface $session): Response
     {
+
         $comment = new Comment();
         $comment->setArticle($article);
 
@@ -42,9 +44,14 @@ class DefaultController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            $manager->persist($comment);
-            $manager->flush();
-            return $this->redirectToRoute('article_view', ['id' => $article->getId()]);
+            
+            if($commentService->checkCommentLength($comment) === true) {
+                $manager->persist($comment);
+                $manager->flush();
+                return $this->redirectToRoute('article_view', ['id' => $article->getId()]);
+            } else {
+                $session->getFlashBag()->add('danger', 'Comment is too short! (10 caracters min)');
+            }
         }
 
         return $this->render('default/view.html.twig', [
@@ -56,7 +63,6 @@ class DefaultController extends AbstractController
     #[Route('article/add', name:'add_article')]
     public function addArticle(Request $request, EntityManagerInterface $manager): Response
     {
-
         $article = new Article();
 
         $form = $this->createForm(ArticleType::class, $article);
@@ -71,7 +77,7 @@ class DefaultController extends AbstractController
             return $this->redirectToRoute('article_list');
            }
 
-        return $this->render('default/add.html.twig', [
+        return $this->render('default/add_article.html.twig', [
                 'form' => $form->createView(),
         ]);
     }
