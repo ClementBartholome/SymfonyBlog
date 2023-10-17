@@ -25,10 +25,13 @@ class DefaultController extends AbstractController
     public function articleList(ArticleRepository $articleRepository): Response 
     {
 
-        $articles = $articleRepository->findAll();
+        $articles = $articleRepository->findBy([
+            'state' => 'published',
+        ]);
 
         return $this->render('default/index.html.twig', [
             'articles' => $articles,
+            'draft' => false,
         ]);
     }
 
@@ -61,17 +64,30 @@ class DefaultController extends AbstractController
     }
 
     #[Route('article/add', name:'add_article')]
-    public function addArticle(Request $request, EntityManagerInterface $manager): Response
+    #[Route('article/edit/{id}', name:'edit_article', methods: ['GET', 'POST'])]
+    public function addArticle(Article $article = null, Request $request, EntityManagerInterface $manager): Response
     {
-        $article = new Article();
+    
+        if ($article === null) {
+            $article = new Article();
+        }
 
         $form = $this->createForm(ArticleType::class, $article);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+
+            if($form->get('draft')->isClicked()) {
+                $article->setState('draft');
+            } else {
+                $article->setState('published');
+            }
                
-            $manager->persist($article);
+            if($article->getId() === null) {
+                $manager->persist($article);
+            }
+            
             $manager->flush();
 
             return $this->redirectToRoute('article_list');
@@ -101,6 +117,19 @@ class DefaultController extends AbstractController
 
         return $this->render('default/add_category.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('article/draft', name: 'article_draft')]
+    public function draft(ArticleRepository $articleRepository): Response 
+    {
+        $articles = $articleRepository->findBy([
+            'state' => 'draft',
+        ]);
+
+        return $this->render('default/index.html.twig', [
+            'articles' => $articles,
+            'draft' => true,
         ]);
     }
 }

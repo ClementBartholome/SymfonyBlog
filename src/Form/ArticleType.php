@@ -7,7 +7,7 @@ use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Tests\Fixtures\NestedAttribute\Entity;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ArticleType extends AbstractType
@@ -32,6 +32,12 @@ class ArticleType extends AbstractType
                 'class' => Category::class,
                 'multiple' => true,
                 'by_reference' => false,
+            ])
+            ->add('draft', SubmitType::class, [
+                'label' => 'Save as draft',
+            ])
+            ->add('publish', SubmitType::class, [
+                'label' => 'Publish',
             ])
         ;
     }
