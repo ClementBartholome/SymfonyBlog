@@ -9,14 +9,24 @@
     <h1>{{ article.title }}</h1>
     <small>{{ article.creationDate|date('d/m/Y')}}</small>
     <p>{{ article.content }}</p>
-    <h2>Commentaires</h2>
+    <h2>Comments</h2>
     <div class="row">
     {% for comment in article.comments %}
     <div class="col-md-12">
-       <small> Le {{ comment.commentDate|date("d/m/Y") }} par {{ comment.author }}</small>
+       <small> Published on {{ comment.commentDate|date("d/m/Y") }} by {{ comment.author }}</small>
        <p>{{ comment.content }}</p>
     </div>
     {% endfor %}
+
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            {% set flashClass = 'alert-' ~ label %}
+            <div class="alert {{ flashClass }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
 
     {{ form_start(form)  }}
 
