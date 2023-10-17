@@ -32,18 +32,18 @@ class DefaultController extends AbstractController
         ]);
     }
 
-    #[Route('article/add', name:'add_article')]
-    public function addArticle(EntityManagerInterface $manager): Response
-    {
+    // #[Route('article/add', name:'add_article')]
+    // public function addArticle(EntityManagerInterface $manager): Response
+    // {
 
-        $article = new Article();
-        $article->setTitle("Titre de l'article");
-        $article->setContent("Contenu de l'article");
-        $article->setCreationDate(new \DateTime());
+    //     $article = new Article();
+    //     $article->setTitle("Titre de l'article");
+    //     $article->setContent("Contenu de l'article");
+    //     $article->setCreationDate(new \DateTime());
 
-        $manager->persist($article);
-        $manager->flush();
+    //     $manager->persist($article);
+    //     $manager->flush();
 
-    }
+    // }
     
 }

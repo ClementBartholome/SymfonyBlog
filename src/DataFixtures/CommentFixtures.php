@@ -5,19 +5,21 @@ namespace App\DataFixtures;
 use App\Entity\Comment;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-;
+use Faker\Factory;
 
 class CommentFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
        
+        $faker = Factory::create();
+
         for($i = 1; $i <=10; $i++) {
 
         $comment = new Comment();
-        $comment->setContent("Contenu du commentaire");
+        $comment->setContent($faker->paragraph);
         $comment->setCommentDate(new \DateTime());
-        $comment->setAuthor("Clément");
+        $comment->setAuthor($faker->name);
         $comment->setArticle($this->getReference("article_1"));
 
         $manager->persist($comment);      
