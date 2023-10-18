@@ -37,9 +37,10 @@
             {{ form_label(form.categories, null, {'label_attr': {'class': 'form-label'}})  }}
             <small class="form-text text-muted">Ctrl + Click to select multiple categories</small>
             {{ form_widget(form.categories, {'attr': {'class': 'form-control'}}) }}
-        <div class="form-group mt-2">
+        <div class="form-group mt-2 d-flex">
             {{ form_widget(form.draft, {'attr': {'class': 'btn btn-default mt-2'}}) }}
             {{ form_widget(form.publish, {'attr': {'class': 'btn btn-success mt-2'}}) }}
+            {{ form_widget(form.delete, {'attr': {'class': 'btn btn-danger mt-2 ms-auto'}}) }}
         </div>
 
             {{ form_rest(form)  }}

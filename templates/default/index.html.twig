@@ -6,6 +6,26 @@
 
     
     <div class="row mt-2 mb-2">
+    {% if app.request.attributes.get('_route') == 'article_list' %}
+        {% if articles == [] %}
+            <div class="col-md-12">
+                <div class="alert alert-warning" role="alert">
+                    No articles published yet.
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+
+    {% if app.request.attributes.get('_route') == 'article_draft' %}
+        {% if articles == [] %}
+             <div class="col-md-12">
+                <div class="alert alert-warning" role="alert">
+                    No articles in draft.
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+
     {% for article in articles %}
         <div class="col-md-4">
             <div class="card mb-4">
