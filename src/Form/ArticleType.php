@@ -39,6 +39,9 @@ class ArticleType extends AbstractType
             ->add('publish', SubmitType::class, [
                 'label' => 'Publish',
             ])
+            ->add('delete', SubmitType::class, [
+                'label' => 'Delete',
+            ])
         ;
     }
 

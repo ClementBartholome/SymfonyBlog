@@ -36,6 +36,12 @@ class AdminController extends AbstractController
             } else {
                 $article->setState('published');
             }
+
+            if ($form->get('delete')->isClicked()) {
+                $manager->remove($article); 
+                $manager->flush(); 
+                return $this->redirectToRoute('article_list');
+            }
                
             if($article->getId() === null) {
                 $manager->persist($article);
