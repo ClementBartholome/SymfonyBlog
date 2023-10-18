@@ -3,11 +3,16 @@
 {% block title %}Ajouter un article{% endblock %}
 
 {% block body %}
-
-    {{ form_start(form, {'attr': {'class': 'mt-4'}})  }}
-        
+    {% if not form.vars.valid %}
+        {{ form_start(form, {'attr': {'class': 'mt-4 was-validated'}})  }}
+    {% else %}
+        {{ form_start(form, {'attr': {'class': 'mt-4'}})  }}
+    {% endif %}
         {{ form_label(form.title, null, {'label_attr': {'class': 'form-label'}})  }}
         {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+        <div class="invalid-feedback">
+            {{ form_errors(form.title)  }}
+        </div>
 
         {{ form_label(form.content, null, {'label_attr': {'class': 'form-label'}})  }}
         {{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}
