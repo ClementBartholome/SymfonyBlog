@@ -18,8 +18,8 @@ class ArticleFixtures extends Fixture
 
         for ($i = 1; $i <= 10; $i++) {
             $article = new Article();
-            $article->setTitle($faker->sentence);
-            $article->setContent($faker->paragraph);
+            $article->setTitle($faker->text(50));
+            $article->setContent($faker->paragraph(25));
             $article->setState($state[array_rand($state)]);
 
             $date = $faker->dateTimeBetween('-10 days', 'now');
