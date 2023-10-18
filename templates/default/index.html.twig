@@ -5,11 +5,19 @@
 {% block body %}
 
     
-    <h1 class="mt-4">Articles list {% if draft %} (draft) {% endif %}</h1>
-    <ul>
+    <div class="row mt-2 mb-2">
     {% for article in articles %}
-         <li><a href={{ path('article_view', { 'id':article.id}) }}>{{ article.title }}</a> {{ article.creationDate|date('d/m/Y') }} </li>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body text-truncate">
+                    <h5 class="card-title overflow-hidden">{{ article.title }}</h5>
+                    <p class="card-text overflow-hidden">{{ article.content }}</p>
+                    <p class="card-text"><small class="text-muted">{{ article.creationDate|date('d/m/Y') }}</small></p>
+                    <a href={{ path('article_view', { 'id':article.id}) }} class="btn btn-sm btn-primary">Lire la suite</a>  
+                </div>
+            </div>
+        </div>
     {% endfor %}
-    </ul>
+    </div>
 
 {% endblock %}

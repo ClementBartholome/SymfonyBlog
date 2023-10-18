@@ -1,32 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajouter un article{% endblock %}
+{% block title %}Add an article{% endblock %}
 
 {% block body %}
+
+    <h1 class="mt-2">
+        {% if app.request.attributes.get('_route') == 'add_article' %}
+            Add article
+        {% else %}
+            Edit article
+        {% endif %}
+    </h1>
+
     {% if not form.vars.valid %}
         {{ form_start(form, {'attr': {'class': 'mt-4 was-validated'}})  }}
     {% else %}
         {{ form_start(form, {'attr': {'class': 'mt-4'}})  }}
     {% endif %}
-        {{ form_label(form.title, null, {'label_attr': {'class': 'form-label'}})  }}
-        {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
-        <div class="invalid-feedback">
-            {{ form_errors(form.title)  }}
+
+        <div class="form-group mt-2">
+            {{ form_label(form.title, null, {'label_attr': {'class': 'form-label'}})  }}
+            {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+            <div class="invalid-feedback">
+                {{ form_errors(form.title)  }}
+            </div>
         </div>
 
-        {{ form_label(form.content, null, {'label_attr': {'class': 'form-label'}})  }}
-        {{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}
+        <div class="form-group mt-2">
+            {{ form_label(form.content, null, {'label_attr': {'class': 'form-label'}})  }}
+            {{ form_widget(form.content, {'attr': {'class': 'form-control', 'rows': '10'}}) }}
+        </div>
+        <div class="form-group mt-2">
+            {{ form_label(form.creationDate, null, {'label_attr': {'class': 'form-label'}})  }}
+            {{ form_widget(form.creationDate, {'attr': {'class': 'form-control'}}) }}
+        </div>
+            {{ form_label(form.categories, null, {'label_attr': {'class': 'form-label'}})  }}
+            <small class="form-text text-muted">Ctrl + Click to select multiple categories</small>
+            {{ form_widget(form.categories, {'attr': {'class': 'form-control'}}) }}
+        <div class="form-group mt-2">
+            {{ form_widget(form.draft, {'attr': {'class': 'btn btn-default mt-2'}}) }}
+            {{ form_widget(form.publish, {'attr': {'class': 'btn btn-success mt-2'}}) }}
+        </div>
 
-        {{ form_label(form.creationDate, null, {'label_attr': {'class': 'form-label'}})  }}
-        {{ form_widget(form.creationDate, {'attr': {'class': 'form-control'}}) }}
-
-        {{ form_label(form.categories, null, {'label_attr': {'class': 'form-label'}})  }}
-        {{ form_widget(form.categories, {'attr': {'class': 'form-control'}}) }}
-
-        {{ form_widget(form.draft, {'attr': {'class': 'btn btn-default mt-2'}}) }}
-        {{ form_widget(form.publish, {'attr': {'class': 'btn btn-success mt-2'}}) }}
-
-        {{ form_rest(form)  }}
+            {{ form_rest(form)  }}
 
     {{ form_end(form)  }}
 

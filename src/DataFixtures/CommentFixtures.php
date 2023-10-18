@@ -14,13 +14,13 @@ class CommentFixtures extends Fixture
        
         $faker = Factory::create();
 
-        for($i = 1; $i <=10; $i++) {
+        for($i = 1; $i <=25; $i++) {
 
         $comment = new Comment();
         $comment->setContent($faker->paragraph);
         $comment->setCommentDate(new \DateTime());
         $comment->setAuthor($faker->name);
-        $comment->setArticle($this->getReference("article_1"));
+        $comment->setArticle($this->getReference('article_' . rand(1, 10)));
 
         $manager->persist($comment);      
         
